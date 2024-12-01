@@ -1,2 +1,4 @@
-target/*
 
+# Rust files
+target/*
+Cargo.lock
