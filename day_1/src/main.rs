@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::env;
 use std::iter::Sum;
 use std::fs;
@@ -18,9 +19,9 @@ fn main() {
     left_values.sort();
     right_values.sort();
 
-    let differences = left_values
+    let differences = left_values.clone()
         .into_iter()
-        .zip(right_values.into_iter())
+        .zip(right_values.clone().into_iter())
         .map(|(left, right)| {
             if left >= right {
                 left - right
@@ -29,8 +30,24 @@ fn main() {
             }
         });
 
-    let final_sum: u32 = differences.sum();
+    let diff_sum: u32 = differences.sum();
 
-    println!("The final value for task 1 is {final_sum}");
+    println!("The final value for task 1 is {diff_sum}");
+    
+    let mut right_counts = HashMap::<u32, u32>::new();
 
+    right_values.into_iter()
+        .for_each(|left_value| {
+            *right_counts.entry(left_value).or_insert(0) += 1;
+        });
+    
+    let similarity_score: u32 = left_values.into_iter()
+        .map(|left_value| {
+            left_value * right_counts.get(&left_value).unwrap_or(&0)
+        })
+        .sum();
+    
+
+    println!("The final similarity score for task 2 is {similarity_score}");
+    
 }
