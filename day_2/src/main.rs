@@ -12,17 +12,21 @@ fn main() {
         })
         .collect();
 
-    let safe_reports = reports.clone().into_iter().filter(|report| {
-        check_safety(&report)
-    });
+    let safe_reports = reports
+        .clone()
+        .into_iter()
+        .filter(|report| check_safety(&report));
 
     println!("Number of safe reports: {}", safe_reports.count());
 
-    let safe_reports_with_problem_dampener = reports.into_iter().filter(|report| {
-        check_safety_with_problem_dampener(&report)
-    });
+    let safe_reports_with_problem_dampener = reports
+        .into_iter()
+        .filter(|report| check_safety_with_problem_dampener(&report));
 
-    println!("Number of safe reports with problem dampener: {}", safe_reports_with_problem_dampener.count());
+    println!(
+        "Number of safe reports with problem dampener: {}",
+        safe_reports_with_problem_dampener.count()
+    );
 }
 
 fn check_safety(report: &Vec<u32>) -> bool {
@@ -61,4 +65,3 @@ fn check_safety_with_problem_dampener(report: &Vec<u32>) -> bool {
     }
     false
 }
-
