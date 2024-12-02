@@ -1,7 +1,5 @@
 use std::collections::HashMap;
-use std::env;
 use std::fs;
-use std::iter::Sum;
 
 fn main() {
     let input_data = fs::read_to_string("inputs/input_1.txt").expect("Could not read input file");
