@@ -13,14 +13,13 @@ fn main() {
         .collect();
 
     let safe_reports = reports
-        .clone()
-        .into_iter()
+        .iter()
         .filter(|report| check_safety(&report));
 
     println!("Number of safe reports: {}", safe_reports.count());
 
     let safe_reports_with_problem_dampener = reports
-        .into_iter()
+        .iter()
         .filter(|report| check_safety_with_problem_dampener(&report));
 
     println!(

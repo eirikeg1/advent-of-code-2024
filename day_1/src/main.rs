@@ -17,9 +17,8 @@ fn main() {
     right_values.sort();
 
     let differences = left_values
-        .clone()
-        .into_iter()
-        .zip(right_values.clone().into_iter())
+        .iter()
+        .zip(right_values.iter())
         .map(|(left, right)| {
             if left >= right {
                 left - right
