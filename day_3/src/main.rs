@@ -1,14 +1,22 @@
 use std::fs;
 
 fn main() {
+    println!("Note: I refuse to learn regex for this"); // <--- IMPORTANT!!!!
+
     let input_data = fs::read_to_string("inputs/input_1.txt").expect("Could not read input file");
 
-    let mul_sum: u128 = input_data.lines().map(parse_memory).sum();
+    let mul_sum: u128 = parse_memory(input_data.as_str());
 
     println!("The answer to task 1 is {}", mul_sum);
+
+    let conditional_str = remove_conditionals(&input_data);
+
+    let mul_sum_2: u128 = parse_memory(conditional_str.as_str());
+
+    println!("The answer to task 2 is {}", mul_sum_2);
 }
 
-fn check_charater(character: char, expected: char, counter: &mut u32) {
+fn check_character(character: char, expected: char, counter: &mut u32) {
     if character == expected {
         *counter += 1;
     } else {
@@ -24,10 +32,10 @@ fn parse_memory(input: &str) -> u128 {
 
     for character in input.chars() {
         match counter {
-            0 => check_charater(character, 'm', &mut counter),
-            1 => check_charater(character, 'u', &mut counter),
-            2 => check_charater(character, 'l', &mut counter),
-            3 => check_charater(character, '(', &mut counter),
+            0 => check_character(character, 'm', &mut counter),
+            1 => check_character(character, 'u', &mut counter),
+            2 => check_character(character, 'l', &mut counter),
+            3 => check_character(character, '(', &mut counter),
             4 => {
                 if character == ',' && num_builder.len() > 0 {
                     counter += 1;
@@ -63,3 +71,30 @@ fn parse_memory(input: &str) -> u128 {
     }
     num_sum
 }
+
+fn remove_conditionals(input: &str) -> String {
+    let mut result = String::new();
+    let mut multiplication_active = true;
+    let mut iter = input.char_indices().peekable();
+
+    while let Some(&(i, _)) = iter.peek() {
+        if multiplication_active {
+            if input[i..].starts_with("don't()") {
+                multiplication_active = false;
+            } else {
+                let (_, ch) = iter.next().unwrap();
+                result.push(ch);
+            }
+        } else {
+            if input[i..].starts_with("do()") {
+                multiplication_active = true;
+            } else {
+                iter.next();
+            }
+        }
+    }
+    result
+}
+
+
+
