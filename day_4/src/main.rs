@@ -15,15 +15,14 @@ fn main() {
     let diag_right_count = count_horizontal(&diag_down_right);
     let diag_left_count = count_horizontal(&diag_down_left);
 
-    println!("The answer to task 1 is {}", horizontal_count + vertical_count + diag_right_count + diag_left_count);
-
-
+    println!(
+        "The answer to task 1 is {}",
+        horizontal_count + vertical_count + diag_right_count + diag_left_count
+    );
 }
 
-
 fn count_horizontal(rows: &Vec<String>) -> usize {
-    rows
-        .into_iter()
+    rows.into_iter()
         .map(|row| {
             row.as_bytes()
                 .windows(4)
@@ -92,22 +91,26 @@ fn extract_diagonals(rows: &[String]) -> (Vec<String>, Vec<String>) {
         while x < r && y < c {
             d.push(grid[x][y]);
             x += 1;
-            if y == 0 { break; }
-            y -= 1;            
+            if y == 0 {
+                break;
+            }
+            y -= 1;
         }
         if d.len() >= 4 {
             diag_down_left.push(d);
         }
     }
-    
+
     for start_row in 1..r {
         let mut d = String::new();
         let (mut x, mut y) = (start_row, c - 1);
         while x < r && y < c {
             d.push(grid[x][y]);
             x += 1;
-            if y == 0 { break; }
-            y -= 1; 
+            if y == 0 {
+                break;
+            }
+            y -= 1;
         }
         if d.len() >= 4 {
             diag_down_left.push(d);
