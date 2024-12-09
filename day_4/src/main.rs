@@ -55,11 +55,10 @@ fn extract_diagonals(rows: &[String]) -> (Vec<String>, Vec<String>) {
     let c = rows[0].len();
     let grid: Vec<Vec<char>> = rows.iter().map(|row| row.chars().collect()).collect();
 
-    let mut diag_down_right = Vec::new(); // top-left to bottom-right diagonals
-    let mut diag_down_left = Vec::new();  // top-right to bottom-left diagonals
+    let mut diag_down_right = Vec::new();
+    let mut diag_down_left = Vec::new();
 
     // top-left to bottom-right diagonals
-    // start from first row, all columns
     for start_col in 0..c {
         let mut d = String::new();
         let (mut x, mut y) = (0, start_col);
@@ -72,7 +71,7 @@ fn extract_diagonals(rows: &[String]) -> (Vec<String>, Vec<String>) {
             diag_down_right.push(d);
         }
     }
-    // start from first column (excluding the top-left corner already covered), all rows
+
     for start_row in 1..r {
         let mut d = String::new();
         let (mut x, mut y) = (start_row, 0);
@@ -87,7 +86,6 @@ fn extract_diagonals(rows: &[String]) -> (Vec<String>, Vec<String>) {
     }
 
     // top-right to bottom-left diagonals
-    // start from first row, all columns
     for start_col in 0..c {
         let mut d = String::new();
         let (mut x, mut y) = (0, start_col);
@@ -101,7 +99,7 @@ fn extract_diagonals(rows: &[String]) -> (Vec<String>, Vec<String>) {
             diag_down_left.push(d);
         }
     }
-    // start from last column (excluding top-right corner)
+    
     for start_row in 1..r {
         let mut d = String::new();
         let (mut x, mut y) = (start_row, c - 1);
